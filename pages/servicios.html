@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Servicios de Desarrollo Web y Soporte Técnico - Josué David Ramos Neira">
+    <title>Servicios - Josué David Ramos Neira</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto+Mono:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    
+    <style>
+        .services-page {
+            padding-top: 120px;
+            min-height: 100vh;
+            background: var(--bg-dark);
+            position: relative;
+        }
+
+        .services-hero {
+            text-align: center;
+            padding: 3rem 0;
+            background: linear-gradient(135deg, rgba(0, 255, 204, 0.05), rgba(255, 0, 255, 0.05));
+            border-bottom: 2px solid rgba(0, 255, 204, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .services-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(0, 255, 204, 0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 204, 0.02) 1px, transparent 1px);
+            background-size: 30px 30px;
+            animation: grid-move 15s linear infinite;
+        }
+
+        .services-hero h1 {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Badge de servicio destacado */
+        .service-badge {
+            position: absolute;
+            top: -18px;
+            right: 30px;
+            background: linear-gradient(135deg, var(--secondary-color), var(--accent-purple));
+            color: var(--bg-dark);
+            padding: 0.65rem 2rem;
+            border-radius: 2rem;
+            font-family: var(--font-heading);
+            font-size: 0.95rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            z-index: 2;
+            box-shadow: 0 4px 20px rgba(255, 0, 255, 0.5);
+            animation: pulse-badge 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-badge {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+            gap: 4rem;
+            margin-top: 5rem;
+            padding: 0 1rem;
+        }
+
+        .service-card {
+            background: rgba(0, 255, 204, 0.03);
+            border: 2px solid rgba(0, 255, 204, 0.2);
+            border-radius: 1.5rem;
+            padding: 4rem 3.5rem;
+            min-height: 750px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .service-card.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Destacar servicio recomendado */
+        .service-card.featured {
+            border-color: var(--secondary-color);
+            background: rgba(255, 0, 255, 0.05);
+            transform: scale(1.02);
+        }
+
+        .service-card.featured.is-visible {
+            transform: scale(1.02) translateY(0);
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(0, 255, 204, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .service-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            border-color: var(--primary-color);
+            box-shadow: var(--shadow-neon-cyan);
+        }
+
+        .service-card.featured:hover {
+            transform: scale(1.05) translateY(-15px);
+            border-color: var(--secondary-color);
+            box-shadow: 0 20px 60px rgba(255, 0, 255, 0.5);
+        }
+
+        .service-card:hover::before {
+            animation: shine 1.5s;
+        }
+
+        .service-header {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 2.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .service-icon {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-purple));
+            border-radius: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 8px 25px rgba(0, 255, 204, 0.3);
+        }
+
+        .service-card:hover .service-icon {
+            transform: scale(1.15) rotate(5deg);
+        }
+
+        .service-icon .material-symbols-outlined {
+            font-size: 3.5rem;
+            color: var(--bg-dark);
+        }
+
+        .service-title {
+            font-family: var(--font-heading);
+            font-size: 2.2rem;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            line-height: 1.2;
+        }
+
+        .service-description {
+            color: var(--text-secondary);
+            margin-bottom: 2.5rem;
+            line-height: 1.9;
+            font-size: 1.05rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .service-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            position: relative;
+            z-index: 1;
+            margin-bottom: 2rem;
+        }
+
+        .service-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            color: var(--text-light);
+            line-height: 1.7;
+            padding: 1rem 1.2rem;
+            background: rgba(0, 255, 204, 0.03);
+            border-radius: 0.75rem;
+            border-left: 4px solid var(--primary-color);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-size: 1rem;
+        }
+
+        .service-list li:hover {
+            background: rgba(0, 255, 204, 0.08);
+            transform: translateX(8px);
+            border-left-width: 6px;
+        }
+
+        .service-list .material-symbols-outlined {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            flex-shrink: 0;
+            margin-top: 0.1rem;
+        }
+
+        /* Timeline de entrega */
+        .service-timeline {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1.25rem;
+            background: rgba(0, 255, 204, 0.05);
+            border-radius: 0.75rem;
+            margin-bottom: 2rem;
+            position: relative;
+            z-index: 1;
+            border: 1px solid rgba(0, 255, 204, 0.2);
+        }
+
+        .service-timeline .material-symbols-outlined {
+            color: var(--primary-color);
+            font-size: 1.75rem;
+        }
+
+        .service-timeline span:last-child {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            font-weight: 500;
+        }
+
+        /* Testimonial dentro de card */
+        .service-testimonial {
+            background: rgba(255, 0, 255, 0.03);
+            border-left: 4px solid var(--secondary-color);
+            padding: 1.75rem;
+            margin: 2rem 0;
+            border-radius: 0.75rem;
+            position: relative;
+            z-index: 1;
+            border: 1px solid rgba(255, 0, 255, 0.2);
+        }
+
+        .service-testimonial p {
+            color: var(--text-light);
+            font-style: italic;
+            margin-bottom: 1rem;
+            line-height: 1.7;
+            font-size: 1.05rem;
+        }
+
+        .service-testimonial cite {
+            color: var(--primary-color);
+            font-style: normal;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .service-price {
+            margin-top: 2.5rem;
+            padding: 2rem;
+            background: rgba(255, 0, 255, 0.05);
+            border: 2px solid rgba(255, 0, 255, 0.3);
+            border-radius: 1rem;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .price-label {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .price-value {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            color: var(--secondary-color);
+            font-weight: 900;
+        }
+
+        .price-note {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-top: 0.75rem;
+            line-height: 1.5;
+        }
+
+        .service-cta {
+            margin-top: 2.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Mejoras de accesibilidad en botones */
+        .btn:focus-visible {
+            outline: 3px solid var(--primary-color);
+            outline-offset: 4px;
+        }
+
+        .btn-primary:focus-visible {
+            outline-color: var(--primary-color);
+        }
+
+        .btn-secondary:focus-visible {
+            outline-color: var(--secondary-color);
+        }
+
+        /* FAQ Section */
+        .service-faq {
+            margin-top: 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .faq-title {
+            color: var(--primary-color);
+            font-family: var(--font-heading);
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .faq-item {
+            background: rgba(0, 255, 204, 0.03);
+            border: 1px solid rgba(0, 255, 204, 0.2);
+            border-radius: 0.75rem;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            background: rgba(0, 255, 204, 0.06);
+            border-color: var(--primary-color);
+        }
+
+        .faq-question {
+            color: var(--text-light);
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.05rem;
+        }
+
+        .faq-question .material-symbols-outlined {
+            color: var(--primary-color);
+            font-size: 1.4rem;
+        }
+
+        .faq-answer {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        /* Sección de comparación */
+        .comparison-section {
+            margin-top: 6rem;
+            position: relative;
+        }
+
+        .comparison-table {
+            width: 100%;
+            background: rgba(0, 255, 204, 0.02);
+            border-radius: 1rem;
+            overflow: hidden;
+            border: 2px solid rgba(0, 255, 204, 0.2);
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1.75rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(0, 255, 204, 0.1);
+        }
+
+        .comparison-table th {
+            background: rgba(0, 255, 204, 0.1);
+            color: var(--primary-color);
+            font-family: var(--font-heading);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 1rem;
+        }
+
+        .comparison-table td {
+            color: var(--text-light);
+            font-size: 1.05rem;
+        }
+
+        .comparison-table tr:hover {
+            background: rgba(0, 255, 204, 0.05);
+        }
+
+        .comparison-check {
+            color: var(--primary-color);
+            font-size: 1.75rem;
+        }
+
+        .comparison-cross {
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 1.75rem;
+        }
+
+        .cta-section {
+            margin-top: 6rem;
+            padding: 5rem 0;
+            background: linear-gradient(135deg, rgba(0, 255, 204, 0.05), rgba(255, 0, 255, 0.05));
+            border-radius: 1.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(0, 255, 204, 0.2) 0%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(60px);
+            animation: float 6s ease-in-out infinite;
+            top: -100px;
+            left: -100px;
+        }
+
+        .cta-section::after {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255, 0, 255, 0.2) 0%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(60px);
+            animation: float 6s ease-in-out infinite 3s;
+            bottom: -100px;
+            right: -100px;
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-content h2 {
+            font-family: var(--font-heading);
+            font-size: clamp(2rem, 5vw, 3rem);
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .cta-content p {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Stats badges */
+        .stats-container {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-badge {
+            background: rgba(0, 255, 204, 0.1);
+            border: 1px solid var(--primary-color);
+            border-radius: 0.5rem;
+            padding: 1rem 2rem;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-family: var(--font-heading);
+            font-size: 2rem;
+            color: var(--primary-color);
+            font-weight: 900;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 0.25rem;
+        }
+
+        @media screen and (max-width: 1024px) {
+            .services-grid {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .services-grid {
+                grid-template-columns: 1fr;
+                gap: 2.5rem;
+                padding: 0;
+            }
+
+            .service-card {
+                padding: 3rem 2rem;
+                min-height: auto;
+            }
+
+            .service-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .service-badge {
+                right: 50%;
+                transform: translateX(50%);
+            }
+
+            .service-icon {
+                width: 85px;
+                height: 85px;
+            }
+
+            .service-icon .material-symbols-outlined {
+                font-size: 3rem;
+            }
+
+            .service-title {
+                font-size: 1.8rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .comparison-table {
+                font-size: 0.85rem;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- WhatsApp Floating Button -->
+    <a href="https://wa.me/51947424866?text=Hola%20Josué,%20me%20interesa%20tus%20servicios" 
+       class="whatsapp-float" 
+       target="_blank" 
+       rel="noopener noreferrer"
+       aria-label="Contactar por WhatsApp">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+    </a>
+
+    <!-- Scroll to Top Button -->
+    <button class="scroll-top" id="scrollTop" aria-label="Volver arriba">
+        <span class="material-symbols-outlined">arrow_upward</span>
+    </button>
+
+    <!-- Header/Navigation -->
+    <header class="header" id="header" role="banner">
+        <nav class="nav container" role="navigation" aria-label="Navegación principal">
+            <div class="nav__logo">
+                <span class="material-symbols-outlined" aria-hidden="true">terminal</span>
+                <span>JDRN</span>
+            </div>
+            
+            <div class="nav__menu" id="nav-menu">
+                <ul class="nav__list">
+                    <li class="nav__item"><a href="../index.html" class="nav__link">Inicio</a></li>
+                    <li class="nav__item"><a href="servicios.html" class="nav__link active" aria-current="page">Servicios</a></li>
+                    <li class="nav__item"><a href="habilidades.html" class="nav__link">Habilidades</a></li>
+                    <li class="nav__item"><a href="proyectos.html" class="nav__link">Proyectos</a></li>
+                    <li class="nav__item"><a href="contacto.html" class="nav__link">Contacto</a></li>
+                </ul>
+                <div class="nav__close" id="nav-close" aria-label="Cerrar menú">
+                    <span class="material-symbols-outlined">close</span>
+                </div>
+            </div>
+
+            <div class="nav__toggle" id="nav-toggle" aria-label="Abrir menú">
+                <span class="material-symbols-outlined">menu</span>
+            </div>
+        </nav>
+    </header>
+
+    <main class="services-page" role="main">
+        <!-- Hero Section -->
+        <section class="services-hero" role="region" aria-labelledby="services-heading">
+            <div class="container">
+                <span class="section__subtitle">Qué puedo hacer por ti</span>
+                <h1 id="services-heading" class="section__title">Mis Servicios</h1>
+                <p style="color: var(--text-secondary); max-width: 700px; margin: 1rem auto;">
+                    Ofrezco soluciones digitales completas y soporte técnico profesional para llevar tu negocio o proyecto al siguiente nivel
+                </p>
+                
+                <!-- Stats badges -->
+                <div class="stats-container">
+                    <div class="stat-badge">
+                        <div class="stat-number">20+</div>
+                        <div class="stat-label">Proyectos Completados</div>
+                    </div>
+                    <div class="stat-badge">
+                        <div class="stat-number">15+</div>
+                        <div class="stat-label">Clientes Satisfechos</div>
+                    </div>
+                    <div class="stat-badge">
+                        <div class="stat-number">24h</div>
+                        <div class="stat-label">Tiempo de Respuesta</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Grid -->
+        <section class="section" role="region" aria-label="Lista de servicios">
+            <div class="container">
+                <div class="services-grid">
+                    <!-- Desarrollo Web - SERVICIO DESTACADO -->
+                    <article class="service-card featured" role="article" aria-labelledby="dev-web-title">
+                        <div class="service-badge" aria-label="Servicio más solicitado">MÁS POPULAR</div>
+                        
+                        <div class="service-header">
+                            <div class="service-icon" role="img" aria-label="Icono de desarrollo web">
+                                <span class="material-symbols-outlined" aria-hidden="true">code</span>
+                            </div>
+                            <h2 id="dev-web-title" class="service-title">Desarrollo Web</h2>
+                        </div>
+                        
+                        <p class="service-description">
+                            Creo sitios web modernos, responsivos y optimizados utilizando las últimas tecnologías. 
+                            Desde landing pages hasta aplicaciones web complejas.
+                        </p>
+
+                        <ul class="service-list">
+                            <li>
+                                <span class="material-symbols-outlined" aria-hidden="true">check_circle</span>
+                                <span>Diseño y desarrollo de sitios web personalizados</span>
+                            </li>
+                            <li>
+                                <span class="material-symbols-outlined" aria-hidden="true">check_circle</span>
+                                <span>Páginas web responsivas 100% adaptables</span>
+                            </li>
+                            <li>
+                                <span class="material-symbols-outlined" aria-hidden="true">check_circle</span>
+                                <span>Desarrollo con WordPress y Laravel</span>
+                            </li>
+                            <li>
+                                <span class="material-symbols-outlined" aria-hidden="true">check_circle</span>
+                                <span>E-commerce y tiendas online</span>
+                            </li>
+                            <li>
+                                <span class="material-symbols-outlined" aria-hidden="true">check_circle</span>
+                                <span>Landing pages de alta conversión</span>
+                            </li>
+                            <li>
+                                <span class="material-symbols-outlined" aria-hidden="true">check_circle</span>
+                                <span>Optimización SEO y rendimiento</span>
+                            </li>
+                            <li>
+                                <span class="material-symbols-outlined" aria-hidden="true">check_circle</span>
+                                <span>Mantenimiento y actualización continua</span>
+                            </li>
+                        </ul>
+
+                        <!-- Timeline de entrega -->
+                        <div class="service-timeline">
+                            <span class="material-symbols-outlined" aria-hidden="true">schedule</span>
+                            <span>Entrega en 2-4 semanas</span>
+                        </div>
+
+                        <!-- Testimonial -->
+                        <blockquote class="service-testimonial">
+                            <p>"Excelente trabajo, desarrolló un sitio web profesional para mi negocio. Muy recomendado."</p>
+                            <cite>— Cliente de Ayacucho</cite>
+                        </blockquote>
+
+                        <div class="service-price">
+                            <p class="price-label">Desde</p>
+                            <p class="price-value">S/ 500</p>
+                            <p class="price-note">Landing page básica. Proyectos personalizados según cotización.</p>
+                        </div>
+
+                        <!-- FAQ -->
+                        <div class="service-faq">
+                            <h3 class="faq-title">Preguntas Frecuentes</h3>
+                            <div class="faq-item">
+                                <div class="faq-question">
+                                    <span class="material-symbols-outlined" aria-hidden="true">help</span>
+                                    <span>¿Incluye hosting y dominio?</span>
+                                </div>
+                                <div class="faq-answer">
+                                    Te asesoro en la compra de hosting y dominio. El precio es adicional según el proveedor.
+                                </div>
+                            </div>
+                            <div class="faq-item">
+                                <div class="faq-question">
+                                    <span class="material-symbols-outlined" aria-hidden="true">help</span>
+                                    <span>¿Cuántas revisiones incluye?</span>
+                                </div>
+                                <div class="faq-answer">
+                                    Incluye 3 rondas de revisión para asegurar que el sitio cumpla tus expectativas.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="service-cta">
+                            <a href="contacto.html" class="btn btn-primary" style="width: 100%; justify-content: center;">
+                                <span>Solicitar Cotización Gratuita</span>
+                                <span class="material-symbols-outlined" aria-hidden="true">arrow_forward</span>
+                            </a>
+                        </div>
+                    </article>
+
+                    <!-- Soporte Técnico -->
+                    <article class="service-card" role="article" aria-labelledby="soporte-title">
+                        <div class="service-header">
+                            <div class="service-icon" role="img" aria-label="Icono de soporte técnico">
+                                <span class="material-symbols-outlined" aria-hidden="true">build</span>
+                            </div>
+                            <h2 id="soporte-title" class="service-title">Soporte Técnico</h2>
+                        </div>
+                        
+                        <p class="service-description">
+                            Servicio técnico especializado para computadoras y laptops. Mantenimiento preventivo y correctivo 
+                            con garantía de calidad.
+                        </p>
+
+                        <ul class="service-list">
+                            <li>
+                                <span class="material-symbols-outlined" aria-hidden="true">check_circle</span>
+                                <span>Mantenimiento preventivo y correctivo de PC/Laptops</span>
+                            </li>
+                            <li>
+                                <span class="material-symbols-outlined" aria-hidden="true">check_circle</span>
+                                <span>Diagnóstico y reparación de hardware</span>
+                            </li>
+                            <li>
+                                <span class="material-symbols-outlined" aria-hidden="true">check_circle</span>
+                                <span>Limpieza profunda de componentes</span>
+                            </li>
+                            <li>
+                                <span class="material-symbols-outlined" aria-hidden="true">check_circle</span>
+                                <span>Instalación de software original</span>
+                            </li>
+                            <li>
+                                <span class="material-symbols-outlined" aria-hidden="true">check_circle</span>
+                                <span>Venta de licencias originales (Windows, Office)</span>
+                            </li>
+                            <li>
+                                <span class="material-symbols-outlined" aria-hidden="true">check_circle</span>
+                                <span>Formateo e instalación de sistemas operativos</span>
+                            </li>
+                            <li>
+                                <span class="material-symbols-outlined" aria-hidden="true">check_circle</span>
+                                <span>Asistencia técnica remota y presencial</span>
+                            </li>
+                        </ul>
+
+                        <!-- Timeline -->
+                        <div class="service-timeline">
+                            <span class="material-symbols-outlined" aria-hidden="true">schedule</span>
+                            <span>Servicio en el mismo día</span>
+                        </div>
+
+                        <!-- Testimonial -->
+                        <blockquote class="service-testimonial">
+                            <p>"Rápido y efectivo. Solucionó el problema de mi laptop en menos de una hora."</p>
+                            <cite>— Cliente de Pausa</cite>
+                        </blockquote>
+
+                        <div class="service-price">
+                            <p class="price-label">Desde</p>
+                            <p class="price-value">S/ 30</p>
+                            <p class="price-note">Mantenimiento básico. Reparaciones según diagnóstico.</p>
+                        </div>
+
+                        <!-- FAQ -->
+                        <div class="service-faq">
+                            <h3 class="faq-title">Preguntas Frecuentes</h3>
+                            <div class="faq-item">
+                                <div class="faq-question">
+                                    <span class="material-symbols-outlined" aria-hidden="true">help</span>
+                                    <span>¿Ofreces servicio a domicilio?</span>
+                                </div>
+                                <div class="faq-answer">
+                                    Sí, ofrezco servicio a domicilio en Pausa y alrededores con costo adicional.
+                                </div>
+                            </div>
+                            <div class="faq-item">
+                                <div class="faq-question">
+                                    <span class="material-symbols-outlined" aria-hidden="true">help</span>
+                                    <span>¿Tienes garantía?</span>
+                                </div>
+                                <div class="faq-answer">
+                                    Todo servicio incluye garantía de 30 días en trabajo realizado.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="service-cta">
+                            <a href="https://wa.me/51947424866?text=Hola%20Josué,%20necesito%20soporte%20técnico" 
+                               class="btn btn-primary" 
+                               style="width: 100%; justify-content: center;"
+                               target="_blank"
+                               rel="noopener noreferrer">
+                                <span>Contactar por WhatsApp</span>
+                                <span class="material-symbols-outlined" aria-hidden="true">phone</span>
+                            </a>
+                        </div>
+                    </article>
+
+                    <!-- Consultoría IT -->
+                    <article class="service-card" role="article" aria-labelledby="consultoria-title">
+                        <div class="service-header">
+                            <div class="service-icon" role="img" aria-label="Icono de consultoría">
+                                <span class="material-symbols-outlined" aria-hidden="true">psychology</span>
+                            </div>
+                            <h2 id="consultoria-title" class="service-title">Consultoría IT</h2>
+                        </div>
+                        
+                        <p class="service-description">
+                            Asesoramiento profesional en tecnología para empresas y emprendedores. 
+                            Te ayudo a tomar las mejores decisiones tecnológicas.
+                        </p>
+
+                        <ul class="service-list">
+                            <li>
+                                <span class="material-symbols-outlined" aria-hidden="true">check_circle</span>
+                                <span>Asesoría en transformación digital</span>
+                            </li>
+                            <li>
+                                <span class="material-symbols-outlined" aria-hidden="true">check_circle</span>
+                                <span>Evaluación de infraestructura tecnológica</span>
+                            </li>
+                            <li>
+                                <span class="material-symbols-outlined" aria-hidden="true">check_circle</span>
+                                <span>Recomendación de equipos y software</span>
+                            </li>
+                            <li>
+                                <span class="material-symbols-outlined" aria-hidden="true">check_circle</span>
+                                <span>Capacitación en herramientas digitales</span>
+                            </li>
+                            <li>
+                                <span class="material-symbols-outlined" aria-hidden="true">check_circle</span>
+                                <span>Optimización de procesos con tecnología</span>
+                            </li>
+                            <li>
+                                <span class="material-symbols-outlined" aria-hidden="true">check_circle</span>
+                                <span>Estrategia de presencia digital</span>
+                            </li>
+                            <li>
+                                <span class="material-symbols-outlined" aria-hidden="true">check_circle</span>
+                                <span>Soporte continuo y seguimiento</span>
+                            </li>
+                        </ul>
+
+                        <!-- Timeline -->
+                        <div class="service-timeline">
+                            <span class="material-symbols-outlined" aria-hidden="true">schedule</span>
+                            <span>Primera consulta gratuita (30 min)</span>
+                        </div>
+
+                        <!-- Testimonial -->
+                        <blockquote class="service-testimonial">
+                            <p>"Me ayudó a digitalizar mi negocio. Ahora tengo presencia online y más clientes."</p>
+                            <cite>— Emprendedor Local</cite>
+                        </blockquote>
+
+                        <div class="service-price">
+                            <p class="price-label">Consulta personalizada</p>
+                            <p class="price-value">Cotizar</p>
+                            <p class="price-note">Precio según alcance del proyecto. Primera consulta sin costo.</p>
+                        </div>
+
+                        <!-- FAQ -->
+                        <div class="service-faq">
+                            <h3 class="faq-title">Preguntas Frecuentes</h3>
+                            <div class="faq-item">
+                                <div class="faq-question">
+                                    <span class="material-symbols-outlined" aria-hidden="true">help</span>
+                                    <span>¿La primera consulta es gratis?</span>
+                                </div>
+                                <div class="faq-answer">
+                                    Sí, ofrezco 30 minutos de consulta gratuita para evaluar tus necesidades.
+                                </div>
+                            </div>
+                            <div class="faq-item">
+                                <div class="faq-question">
+                                    <span class="material-symbols-outlined" aria-hidden="true">help</span>
+                                    <span>¿Puedo contratar por horas?</span>
+                                </div>
+                                <div class="faq-answer">
+                                    Sí, ofrezco paquetes por horas o proyectos completos según tus necesidades.
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="service-cta">
+                            <a href="contacto.html" class="btn btn-primary" style="width: 100%; justify-content: center;">
+                                <span>Agendar Consulta Gratuita</span>
+                                <span class="material-symbols-outlined" aria-hidden="true">calendar_month</span>
+                            </a>
+                        </div>
+                    </article>
+                </div>
+
+                <!-- Comparison Table -->
+                <div class="comparison-section reveal">
+                    <h2 class="section__title" style="text-align: center; margin-bottom: 3rem;">Comparación de Servicios</h2>
+                    <div style="overflow-x: auto;">
+                        <table class="comparison-table">
+                            <thead>
+                                <tr>
+                                    <th>Característica</th>
+                                    <th>Desarrollo Web</th>
+                                    <th>Soporte Técnico</th>
+                                    <th>Consultoría IT</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Tiempo de entrega</td>
+                                    <td>2-4 semanas</td>
+                                    <td>Mismo día</td>
+                                    <td>Según proyecto</td>
+                                </tr>
+                                <tr>
+                                    <td>Garantía incluida</td>
+                                    <td><span class="material-symbols-outlined comparison-check">check_circle</span></td>
+                                    <td><span class="material-symbols-outlined comparison-check">check_circle</span></td>
+                                    <td><span class="material-symbols-outlined comparison-check">check_circle</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Servicio remoto</td>
+                                    <td><span class="material-symbols-outlined comparison-check">check_circle</span></td>
+                                    <td><span class="material-symbols-outlined comparison-check">check_circle</span></td>
+                                    <td><span class="material-symbols-outlined comparison-check">check_circle</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Servicio presencial</td>
+                                    <td><span class="material-symbols-outlined comparison-cross">cancel</span></td>
+                                    <td><span class="material-symbols-outlined comparison-check">check_circle</span></td>
+                                    <td><span class="material-symbols-outlined comparison-check">check_circle</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Consulta gratuita</td>
+                                    <td><span class="material-symbols-outlined comparison-check">check_circle</span></td>
+                                    <td><span class="material-symbols-outlined comparison-cross">cancel</span></td>
+                                    <td><span class="material-symbols-outlined comparison-check">check_circle</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Soporte post-entrega</td>
+                                    <td>30 días</td>
+                                    <td>30 días</td>
+                                    <td>Según contrato</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- CTA Section -->
+                <div class="cta-section reveal">
+                    <div class="cta-content">
+                        <h2>¿Listo para iniciar tu proyecto?</h2>
+                        <p>
+                            Trabajemos juntos para crear soluciones tecnológicas que impulsen tu negocio. 
+                            Agenda una consulta gratuita y descubre cómo puedo ayudarte.
+                        </p>
+                        <div class="cta-buttons">
+                            <a href="contacto.html" class="btn btn-primary">
+                                <span>Obtener Consulta Gratuita</span>
+                                <span class="material-symbols-outlined" aria-hidden="true">send</span>
+                            </a>
+                            <a href="proyectos.html" class="btn btn-secondary">
+                                <span>Ver Proyectos Anteriores</span>
+                                <span class="material-symbols-outlined" aria-hidden="true">work</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+        <div class="footer__bg">
+            <div class="footer__particles"></div>
+        </div>
+        <div class="container">
+            <div class="footer__container">
+                <div class="footer__info">
+                    <div class="footer__logo">
+                        <span class="material-symbols-outlined" aria-hidden="true">terminal</span>
+                        <span>JOSUÉ DAVID RAMOS NEIRA</span>
+                    </div>
+                    <p class="footer__description">
+                        Técnico en Computación e Informática | Desarrollador Web Junior<br>
+                        Creando soluciones digitales innovadoras desde Pausa, Ayacucho, Perú
+                    </p>
+                    <div class="footer__social">
+                        <a href="https://www.facebook.com/profile.php?id=TU_ID" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                            </svg>
+                        </a>
+                        <a href="https://github.com/TU_USUARIO" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                            </svg>
+                        </a>
+                        <a href="https://www.instagram.com/TU_USUARIO" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                <path d="M12 0C8.74 0 8.333.015 7.053.072 5.775.132 4.905.333 4.14.63c-.789.306-1.459.717-2.126 1.384S.935 3.35.63 4.14C.333 4.905.131 5.775.072 7.053.012 8.333 0 8.74 0 12s.015 3.667.072 4.947c.06 1.277.261 2.148.558 2.913.306.788.717 1.459 1.384 2.126.667.666 1.336 1.079 2.126 1.384.766.296 1.636.499 2.913.558C8.333 23.988 8.74 24 12 24s3.667-.015 4.947-.072c1.277-.06 2.148-.262 2.913-.558.788-.306 1.459-.718 2.126-1.384.666-.667 1.079-1.335 1.384-2.126.296-.765.499-1.636.558-2.913.06-1.28.072-1.687.072-4.947s-.015-3.667-.072-4.947c-.06-1.277-.262-2.149-.558-2.913-.306-.789-.718-1.459-1.384-2.126C21.319 1.347 20.651.935 19.86.63c-.765-.297-1.636-.499-2.913-.558C15.667.012 15.26 0 12 0zm0 2.16c3.203 0 3.585.016 4.85.071 1.17.055 1.805.249 2.227.415.562.217.96.477 1.382.896.419.42.679.819.896 1.381.164.422.36 1.057.413 2.227.057 1.266.07 1.646.07 4.85s-.015 3.585-.074 4.85c-.061 1.17-.256 1.805-.421 2.227-.224.562-.479.96-.899 1.382-.419.419-.824.679-1.38.896-.42.164-1.065.36-2.235.413-1.274.057-1.649.07-4.859.07-3.211 0-3.586-.015-4.859-.074-1.171-.061-1.816-.256-2.236-.421-.569-.224-.96-.479-1.379-.899-.421-.419-.69-.824-.9-1.38-.165-.42-.359-1.065-.42-2.235-.045-1.26-.061-1.649-.061-4.844 0-3.196.016-3.586.061-4.861.061-1.17.255-1.814.42-2.234.21-.57.479-.96.9-1.381.419-.419.81-.689 1.379-.898.42-.166 1.051-.361 2.221-.421 1.275-.045 1.65-.06 4.859-.06l.045.03zm0 3.678c-3.405 0-6.162 2.76-6.162 6.162 0 3.405 2.76 6.162 6.162 6.162 3.405 0 6.162-2.76 6.162-6.162 0-3.405-2.76-6.162-6.162-6.162zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405c0 .795-.646 1.44-1.44 1.44-.795 0-1.44-.646-1.44-1.44 0-.794.646-1.439 1.44-1.439.793-.001 1.44.645 1.44 1.439z"/>
+                            </svg>
+                        </a>
+                        <a href="https://wa.me/51947424866" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+                            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="footer__links">
+                    <div class="footer__column">
+                        <h3 class="footer__title">Navegación</h3>
+                        <ul class="footer__list">
+                            <li><a href="../index.html" class="footer__link">Inicio</a></li>
+                            <li><a href="servicios.html" class="footer__link">Servicios</a></li>
+                            <li><a href="habilidades.html" class="footer__link">Habilidades</a></li>
+                            <li><a href="proyectos.html" class="footer__link">Proyectos</a></li>
+                            <li><a href="contacto.html" class="footer__link">Contacto</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="footer__column">
+                        <h3 class="footer__title">Servicios</h3>
+                        <ul class="footer__list">
+                            <li><a href="#" class="footer__link">Desarrollo Web</a></li>
+                            <li><a href="#" class="footer__link">Soporte Técnico</a></li>
+                            <li><a href="#" class="footer__link">Mantenimiento PC</a></li>
+                            <li><a href="#" class="footer__link">Licencias Software</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="footer__column">
+                        <h3 class="footer__title">Contacto</h3>
+                        <ul class="footer__list">
+                            <li class="footer__contact">
+                                <span class="material-symbols-outlined" aria-hidden="true">location_on</span>
+                                <span>Pausa, Ayacucho, Perú</span>
+                            </li>
+                            <li class="footer__contact">
+                                <span class="material-symbols-outlined" aria-hidden="true">call</span>
+                                <a href="tel:+51947424866">+51 947 424 866</a>
+                            </li>
+                            <li class="footer__contact">
+                                <span class="material-symbols-outlined" aria-hidden="true">mail</span>
+                                <a href="mailto:josue.ramos@ejemplo.com">josue.ramos@ejemplo.com</a>
+                            </li>
+                            <li class="footer__contact">
+                                <span class="material-symbols-outlined" aria-hidden="true">schedule</span>
+                                <span>Lun - Sáb / 9am - 7pm</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer__bottom">
+                <p class="footer__copy">
+                    &copy; 2024 <strong>Josué David Ramos Neira</strong>. Todos los derechos reservados.
+                </p>
+                <div class="footer__credits">
+                    <span>Diseñado y Desarrollado con</span>
+                    <span class="material-symbols-outlined heart" aria-hidden="true">favorite</span>
+                    <span>en Perú</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="../js/main.js"></script>
+    <script src="../js/animations.js"></script>
+    
+    <!-- Intersection Observer para animaciones -->
+    <script>
+        // Intersection Observer para lazy loading de animaciones
+        document.addEventListener('DOMContentLoaded', function() {
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15
+            };
+
+            const observer = new IntersectionObserver((entries, obs) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        // Desconectar después de animar para mejor performance
+                        obs.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            // Observar todas las tarjetas de servicio
+            const serviceCards = document.querySelectorAll('.service-card');
+            serviceCards.forEach(card => {
+                observer.observe(card);
+            });
+
+            // Observar elementos con clase reveal
+            const revealElements = document.querySelectorAll('.reveal');
+            revealElements.forEach(element => {
+                observer.observe(element);
+            });
+        });
+
+        // Animación stagger para las tarjetas (aparecer en secuencia)
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.service-card');
+            cards.forEach((card, index) => {
+                card.style.transitionDelay = `${index * 0.15}s`;
+            });
+        });
+    </script>
+</body>
+</html>
